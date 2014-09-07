@@ -1,9 +1,10 @@
 {
   "name": "pcm-visual",
+  "main": "index.html",
   "dependencies": {
     "requirejs": ">= 2.1.14"
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/leegee/html5-pcm-visual",
   "authors": [
     "Lee Goddard <leegee@gmail.com>"
