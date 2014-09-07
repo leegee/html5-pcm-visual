@@ -1,7 +1,32 @@
 {
   "name": "pcm-visual",
   "dependencies": {
-    "requirejs": "~2.1.5",
-    "qunit": "~1.11.0"
-  }
+    "requirejs": ">= 2.1.14"
+  },
+  "version": "0.3.0",
+  "homepage": "https://github.com/leegee/html5-pcm-visual",
+  "authors": [
+    "Lee Goddard <leegee@gmail.com>"
+  ],
+  "description": "An aid in real-time PCM file visualisation",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "pcm",
+    "visual",
+    "music",
+    "audio",
+    "graph",
+    "bower",
+    "require"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
