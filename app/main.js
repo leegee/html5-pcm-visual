@@ -7,3 +7,8 @@ require(['lib/PcmVisual'], function (PcmVisual) {
         width:          1100
     });
 });
+
+// require(['lib/PcmImg'], function (PcmVisual) {
+//     var pi = new PcmVisual();
+//    // pi.parseDom();
+// });

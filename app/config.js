@@ -3,9 +3,7 @@ require.config({
     // define(['componentName/file'])
     baseUrl: 'bower_components/',
     paths: {
-        // The ./app directory
         "app": "../app/",
-        // The ./lib directory
         "lib": "../lib/"
     }
 });
