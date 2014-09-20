@@ -2,7 +2,8 @@
   "name": "pcm-visual",
   "main": "index.html",
   "dependencies": {
-    "requirejs": ">= 2.1.14"
+    "requirejs": ">= 2.1.14",
+    "modernizr": "~2.8.3"
   },
   "version": "0.3.1",
   "homepage": "https://github.com/leegee/html5-pcm-visual",
