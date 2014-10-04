@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<title>HTML 5 Audio Experiment: PCM Visualisation</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="utf-8">
+
+    <script data-main="../lib/config" src="../bower_components/requirejs/require.js"></script>
+
+    <script>
+        require(['PcmVisual'], function (PcmVisual) {
+            new PcmVisual({
+                uri:            'samples/ouds/oud1.wav',
+                element:        'app-container',
+                rgbForeground:  '195,151,76',
+                height:         500,
+                width:          1100
+            });
+        });
+    </script>
+</head>
+
+<body>
+	<h1>HTML 5 Audio Experiment in PCM Visualisation</h1>
+
+    <article role="main" id="app-container"></article>
+	</section>
+</body>
+</html>
