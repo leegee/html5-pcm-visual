@@ -100,8 +100,7 @@
                 require(['SpectraWidget'], function (Spectra) {});
             </script>
             <div class="spectra"
-                data-height=333
-                data-width=999
+                style="height:100px;width:100px"
                 data-playable='true'
                 data-fftsize=512
                 data-monochrome=89
@@ -113,5 +112,34 @@
             </div>
         </xmp>
     </figure>
+
+    <figure>
+        <div class="spectra"
+            style='width:100px; height:100px'
+            data-uri='samples/ouds/oud1.wav'
+            data-playable='true'
+            data-fftsize=2048
+            data-smoothingtimeconstant=0
+            data-palettefrom=true
+            data-stepy=4
+            data-graphwaveform=false
+        >
+        </div>
+        <xmp>
+            <div class="spectra"
+                style='width:100px; height:100px'
+                data-uri='samples/ouds/oud1.wav'
+                data-playable='true'
+                data-fftsize=2048
+                data-smoothingtimeconstant=0
+                data-palettefrom=true
+                data-stepy=14
+                data-graphwaveform=false
+            >
+            </div>
+        </xmp>
+    </figure>
+
+
 </body>
 </html>
