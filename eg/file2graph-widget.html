@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-    <script data-main="lib/config" src="bower_components/requirejs/require.js"></script>
+    <script data-main="../lib/config" src="../bower_components/requirejs/require.js"></script>
 
     <script>
         require(['File2GraphWidget'], function (File2Graph) {});
@@ -23,6 +23,21 @@
             data-height=300
             data-width=900
         ></article>
+
+        <xmp>
+            <script data-main="config" src="../bower_components/requirejs/require.js"></script>
+
+            <script>
+                require(['File2GraphWidget'], function (File2Graph) {});
+            </script>
+            <article role="main" class="file2graph"
+                data-uri='samples/ouds/oud1.wav'
+                data-rgbForeground='195,151,76'
+                data-playable=true
+                data-height=300
+                data-width=900
+            ></article>
+        </xmp>
 	</section>
 
 </body>
