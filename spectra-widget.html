@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<title>HTML 5 Audio Experiment: PCM Visualisation</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<title>HTML 5 Audio Experiment: Spectrum Analyser</title>
 	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-	<link href="/_/css/general.css" media="screen" type="text/css" rel="stylesheet">
-
-    <script data-main="lib/config" src="bower_components/requirejs/require.js"></script>
-
+    <script data-main="lib/config" src="bower_components/requirejs/require.js">
+    </script>
     <script>
         require(['SpectraWidget'], function (Spectra) {});
     </script>
-
-	<style>
-		canvas {
-			background: #E8D2A1;
-			-webkit-box-shadow: inset 0px 0px 15px 13px rgba(246, 140, 61, .3);
-			box-shadow: inset 0px 0px 15px 13px rgba(246, 140, 61, .3);
-		}
-	</style>
 </head>
 
 <body>
-	<header id="masthead" role="banner">
-	    <div id="branding">
-	    	<h1>HTML 5 Audio Experiment in PCM Visualisation - File2Graph Widget</h1>
-	    </div>
-	    <nav id="nav" role="menubar"></nav>
-	</header>
+	<h1>AMD ES/HTML 5 Spectrum Analyser Audio Visualisation Widget</h1>
 
-	<section id="content">
-	    <article class="spectra" role="main" id="app-container"
+    <div class="spectra"
+        data-uri='samples/ouds/oud1.wav'
+        data-height=333
+        data-width=1024
+        data-playable='true'
+        data-fftsize=1024
+        data-smoothingtimeconstant=0
+        data-palettefrom=true
+        data-stepy=4
+    >
+    </div>
+
+    <xmp>
+        <script data-main="lib/config" src="bower_components/requirejs/require.js">
+        </script>
+        <script>
+            require(['SpectraWidget'], function (Spectra) {});
+        </script>
+        <div class="spectra"
             data-uri='samples/ouds/oud1.wav'
-            data-element='app-container'
-            data-height=512
-            data-width=1100
+            data-height=333
+            data-width=1024
             data-playable='true'
             data-fftsize=1024
             data-smoothingtimeconstant=0
             data-palettefrom=true
             data-stepy=4
-        ></article>
-	</section>
-
-	<footer id="site-info" role="contentinfo">
-	</footer>
-
+        >
+        </div>
+    </xmp>
 </body>
 </html>
