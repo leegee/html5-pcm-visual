@@ -2,47 +2,28 @@
 <html lang="en" dir="ltr">
 <head>
 	<title>HTML 5 Audio Experiment: PCM Visualisation</title>
+    <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta charset="utf-8">
-
-	<link href="/_/css/general.css" media="screen" type="text/css" rel="stylesheet">
 
     <script data-main="lib/config" src="bower_components/requirejs/require.js"></script>
 
     <script>
         require(['File2GraphWidget'], function (File2Graph) {});
     </script>
-
-	<style>
-		canvas {
-			background: #E8D2A1;
-			-webkit-box-shadow: inset 0px 0px 15px 13px rgba(246, 140, 61, .3);
-			box-shadow: inset 0px 0px 15px 13px rgba(246, 140, 61, .3);
-		}
-	</style>
 </head>
 
 <body>
-	<header id="masthead" role="banner">
-	    <div id="branding">
-	    	<h1>HTML 5 Audio Experiment in PCM Visualisation - File2Graph Widget</h1>
-	    </div>
-	    <nav id="nav" role="menubar"></nav>
-	</header>
+	<h1>HTML 5 Audio Experiment in PCM Visualisation - File2Graph Widget</h1>
 
-	<section id="content">
-	    <article class="file2graph" role="main" id="app-container"
+	<section>
+	    <article role="main" class="file2graph"
             data-uri='samples/ouds/oud1.wav'
-            data-element='app-container'
             data-rgbForeground='195,151,76'
             data-playable=true
-            data-height=500
-            data-width=1100
+            data-height=300
+            data-width=900
         ></article>
 	</section>
-
-	<footer id="site-info" role="contentinfo">
-	</footer>
 
 </body>
 </html>
