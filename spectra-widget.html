@@ -15,35 +15,102 @@
 <body>
 	<h1>AMD ES/HTML 5 Spectrum Analyser Audio Visualisation Widget</h1>
 
-    <div class="spectra"
-        data-uri='samples/ouds/oud1.wav'
-        data-height=333
-        data-width=1024
-        data-playable='true'
-        data-fftsize=1024
-        data-smoothingtimeconstant=0
-        data-palettefrom=true
-        data-stepy=4
-    >
-    </div>
-
-    <xmp>
-        <script data-main="lib/config" src="bower_components/requirejs/require.js">
-        </script>
-        <script>
-            require(['SpectraWidget'], function (Spectra) {});
-        </script>
+    <figure>
         <div class="spectra"
             data-uri='samples/ouds/oud1.wav'
             data-height=333
-            data-width=1024
+            data-width=999
             data-playable='true'
-            data-fftsize=1024
+            data-fftsize=2048
             data-smoothingtimeconstant=0
             data-palettefrom=true
             data-stepy=4
         >
         </div>
-    </xmp>
+        <xmp>
+            <script data-main="lib/config" src="bower_components/requirejs/require.js">
+            </script>
+            <script>
+                require(['SpectraWidget'], function (Spectra) {});
+            </script>
+            <div class="spectra"
+                data-uri='samples/ouds/oud1.wav'
+                data-height=333
+                data-width=999
+                data-playable='true'
+                data-fftsize=2048
+                data-smoothingtimeconstant=0
+                data-palettefrom=true
+                data-stepy=4
+            >
+            </div>
+        </xmp>
+    </figure>
+
+
+    <figure>
+        <div class="spectra"
+            data-setFillStyle=red
+            data-uri='samples/ouds/oud1.wav'
+            data-height=333
+            data-width=999
+            data-playable='true'
+            data-fftsize=512
+            data-smoothingtimeconstant=0
+            data-stepy=4
+        >
+        </div>
+        <xmp>
+            <script data-main="lib/config" src="bower_components/requirejs/require.js">
+            </script>
+            <script>
+                require(['SpectraWidget'], function (Spectra) {});
+            </script>
+            <div class="spectra"
+                data-uri='samples/ouds/oud1.wav'
+                data-height=111
+                data-width=333
+                data-playable='true'
+                data-fftsize=512
+                data-smoothingtimeconstant=0
+                data-palettefrom=false
+                data-stepy=4
+            >
+            </div>
+        </xmp>
+    </figure>
+
+    <figure>
+        <div class="spectra"
+            data-color=red
+            data-uri='samples/ouds/oud1.wav'
+            data-height=333
+            data-width=999
+            data-playable='true'
+            data-fftsize=512
+            data-monochrome=89
+            data-smoothingtimeconstant=0
+            data-stepy=4
+        >
+        </div>
+        <xmp>
+            <script data-main="lib/config" src="bower_components/requirejs/require.js">
+            </script>
+            <script>
+                require(['SpectraWidget'], function (Spectra) {});
+            </script>
+            <div class="spectra"
+                data-uri='samples/ouds/oud1.wav'
+                data-height=111
+                data-width=333
+                data-playable='true'
+                data-fftsize=512
+                data-smoothingtimeconstant=0
+                data-palettefrom=false
+                data-stepy=4
+            >
+            </div>
+        </xmp>
+    </figure>
 </body>
 </html>
