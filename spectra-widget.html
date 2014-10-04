@@ -43,6 +43,7 @@
                 data-smoothingtimeconstant=0
                 data-palettefrom=true
                 data-stepy=4
+                data-graphwaveform=false
             >
             </div>
         </xmp>
@@ -51,7 +52,6 @@
 
     <figure>
         <div class="spectra"
-            data-setFillStyle=red
             data-uri='samples/ouds/oud1.wav'
             data-height=333
             data-width=999
@@ -69,12 +69,11 @@
             </script>
             <div class="spectra"
                 data-uri='samples/ouds/oud1.wav'
-                data-height=111
-                data-width=333
+                data-height=333
+                data-width=999
                 data-playable='true'
                 data-fftsize=512
                 data-smoothingtimeconstant=0
-                data-palettefrom=false
                 data-stepy=4
             >
             </div>
@@ -83,7 +82,6 @@
 
     <figure>
         <div class="spectra"
-            data-color=red
             data-uri='samples/ouds/oud1.wav'
             data-height=333
             data-width=999
@@ -92,6 +90,7 @@
             data-monochrome=89
             data-smoothingtimeconstant=0
             data-stepy=10
+            data-color=red
             data-strokestyle='rgba(20,120,20,0.6)'
         >
         </div>
@@ -102,14 +101,15 @@
                 require(['SpectraWidget'], function (Spectra) {});
             </script>
             <div class="spectra"
-                data-uri='samples/ouds/oud1.wav'
-                data-height=111
-                data-width=333
+                data-height=333
+                data-width=999
                 data-playable='true'
                 data-fftsize=512
+                data-monochrome=89
                 data-smoothingtimeconstant=0
-                data-palettefrom=false
                 data-stepy=10
+                data-color=red
+                data-strokestyle='rgba(20,120,20,0.6)'
             >
             </div>
         </xmp>
