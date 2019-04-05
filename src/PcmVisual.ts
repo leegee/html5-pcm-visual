@@ -1,8 +1,8 @@
 import { Sound } from './Sound';
 
 const ATTR_NAMES = [
-  'scaleX', 'scaleY', 'opacityStep', 'fftrSize', 'generationsToKeep',
-  'rgbForeground', 'lineWidth', 'lineHeight', 'width', 'height', 'uri'
+  'opacityStep', 'fftrSize', 'generationsToKeep',
+  'lineWidth', 'lineHeight', 'width', 'height', 'uri'
 ];
 
 export class PcmVisual extends HTMLElement {
@@ -19,7 +19,7 @@ export class PcmVisual extends HTMLElement {
   playing = false;
   fftSize = 512;
   generationsToKeep = 28;
-  rgbForeground = '255,255,255';
+  color = '255,255,255';
   lineWidth = 3;
   lineWidth2 = 1;
 
@@ -34,16 +34,15 @@ export class PcmVisual extends HTMLElement {
       let v = this.getAttribute(attr);
       if (v) {
         this[attr] = v;
-        console.log(v);
-      }
-      if (typeof this[attr] === 'undefined') {
-        console.log(attr)
       }
     });
 
     if (typeof this.uri === 'undefined' || this.uri === null) {
       throw new TypeError('uri parameter not supplied');
     }
+
+    const styles = window.getComputedStyle(this);
+    this.color = styles.getPropertyValue('color') || this.color;
 
     this.renderTimer = null;
     this.shadow = this.attachShadow({ mode: 'open' });
@@ -53,7 +52,7 @@ export class PcmVisual extends HTMLElement {
     this.shadow.appendChild(this.canvas);
     this.ctx = this.canvas.getContext('2d');
     this.scaleX = this.width / (this.fftSize / 3);
-    this.scaleY = this.width / 256;
+    this.scaleY = this.height / 256;
     this.opacityStep = 1 / this.generationsToKeep;
 
     var self = this;
@@ -71,7 +70,7 @@ export class PcmVisual extends HTMLElement {
           }
         })();
 
-        // Schedule cancel of the animation request:
+        // Schedule cancel of the animation:
         setTimeout(
           function () {
             self.playing = false;
@@ -109,8 +108,8 @@ export class PcmVisual extends HTMLElement {
     // Render history, including current, newest first
     for (var gen = 0; gen < this.history.length; gen++) {
       this.ctx.beginPath();
-      this.ctx.fillStyle = this.ctx.strokeStyle = 'rgba(' + this.rgbForeground +
-        ',' + (1 - (this.opacityStep * gen)) + ')';
+      this.ctx.fillStyle = this.ctx.strokeStyle = 'rgb(' + this.color + ')';
+      this.ctx.globalAlpha = (1 - (this.opacityStep * gen));
 
       for (var ox = 0; ox < this.history[gen].length; ox++) {
         x = (ox * this.scaleX);
@@ -122,7 +121,6 @@ export class PcmVisual extends HTMLElement {
           this.ctx.lineTo(x, y);
         }
       }
-      // this.ctx.moveTo( x, y );
       this.ctx.stroke();
       this.ctx.closePath();
       this.ctx.scale(0.96, 0.96);

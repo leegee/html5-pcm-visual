@@ -72,13 +72,13 @@ export class Sound {
       return;
     }
     this.playing = true;
+    this.actx.resume();
     this.node = this.actx.createBufferSource();
     this.node.buffer = this.aBuffer;
     this.analyser = this.actx.createAnalyser();
     this.analyser.fftSize = this.fftSize;
     this.node.connect(this.analyser);
     this.analyser.connect(this.actx.destination);
-    console.info('Sound.node', this.node);
     this.node.start(0);
   }
 }
