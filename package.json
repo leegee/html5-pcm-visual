@@ -1,31 +1,48 @@
 {
-	"name": "pcm-visual",
-	"description": "An aid to visualising PCM wave files",
-	"version": "0.3.2",
-	"engines": {
-		"node": ">= 0.8.0"
-	},
-	"scripts": {
-		"test": "grunt qunit"
-	},
-	"author": {
-		"name": "Lee Goddard",
-		"email": "js@leegoddard.net",
-		"url": "https://github.com/leegee/html5-pcm-visual/"
-	},
-	"licenses": [ {
-		"type": "MIT",
-		"url": "http://mit-license.org"
-	} ],
-	"devDependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-qunit": "*",
-		"grunt-contrib-jshint": "*",
-		"grunt-contrib-concat": "*",
-		"grunt-contrib-uglify": "*",
-		"grunt-contrib-watch": "*",
-		"grunt-contrib-clean": "*",
-		"grunt-contrib-requirejs": "*",
-		"grunt-contrib-connect": "*"
-	}
+  "name": "pcm-visual",
+  "description": "An aid to visualising PCM wave files",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">= 11.0.0"
+  },
+  "scripts": {
+    "test": "mocha --require ts-node/register src/**/*.spec.ts",
+    "dev": "webpack-dev-server --config ./webpack.dev.conf.js",
+    "start": "webpack-dev-server --open --config ./webpack.dev.conf.js",
+    "build": "webpack --config ./webpack.prod.conf.js",
+    "test-dist": "node -e \"require('connect')().use(require('serve-static')(__dirname+'/dist')).listen(9090, () => { console.log('Server running on http://localhost:9090 ...'); });\""
+  },
+  "author": {
+    "name": "Lee Goddard",
+    "email": "js@leegoddard.net",
+    "url": "https://github.com/leegee/html5-pcm-visual/"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mit-license.org"
+    }
+  ],
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "ts-node": "^8.0.3",
+    "clean-webpack-plugin": "0.1.17",
+    "connect": "^3.6.6",
+    "copy-webpack-plugin": "4.1.0",
+    "html-loader": "0.5.1",
+    "html-webpack-plugin": "2.30.1",
+    "serve-static": "^1.13.2",
+    "ts-loader": "2.3.7",
+    "typescript": "^3.0.3",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.9.1"
+  },
+  "dependencies": {
+    "typescript": "^3.4.1",
+    "@webcomponents/webcomponentsjs": "2.2.7",
+    "web-animations-js": "^2.3.1"
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "outDir": "./dist/",
+    "rootDir": "./src/",
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "target": "es2015"
+  },
+  "exclude": ["spec\\.ts$"]
+}
