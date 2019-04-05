@@ -2,7 +2,7 @@ import { Sound } from './Sound';
 
 const ATTR_NAMES = [
   'opacityStep', 'fftrSize', 'generationsToKeep',
-  'lineWidth', 'lineHeight', 'width', 'height', 'uri'
+  'lineWidth', 'lineHeight', 'uri'
 ];
 
 export class PcmVisual extends HTMLElement {
@@ -43,19 +43,33 @@ export class PcmVisual extends HTMLElement {
 
     const styles = window.getComputedStyle(this);
     this.color = styles.getPropertyValue('color') || this.color;
+    console.log(this.color);
+    this.width = parseInt(styles.getPropertyValue('width'));
+    this.height = parseInt(styles.getPropertyValue('height'));
 
     this.renderTimer = null;
     this.shadow = this.attachShadow({ mode: 'open' });
+
+    const style = document.createElement('style');
+    style.textContent = ':host { display:block }';
+    this.shadow.appendChild(style);
+
     this.canvas = document.createElement('canvas');
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.shadow.appendChild(this.canvas);
+
     this.ctx = this.canvas.getContext('2d');
     this.scaleX = this.width / (this.fftSize / 3);
     this.scaleY = this.height / 256;
     this.opacityStep = 1 / this.generationsToKeep;
+  }
 
-    var self = this;
+  play(): void {
+    if (this.playing) {
+      return;
+    }
+    const self = this;
     this.audio = new Sound(
       this.uri,
       this.fftSize,
@@ -81,7 +95,7 @@ export class PcmVisual extends HTMLElement {
     );
   };
 
-  renderFrame() {
+  renderFrame(): void {
     this.canvas.width = this.canvas.width; // clear canvas
     this.ctx.lineWidth = this.lineWidth;
 
@@ -106,12 +120,12 @@ export class PcmVisual extends HTMLElement {
     let x, y;
 
     // Render history, including current, newest first
-    for (var gen = 0; gen < this.history.length; gen++) {
+    for (let gen = 0; gen < this.history.length; gen++) {
       this.ctx.beginPath();
-      this.ctx.fillStyle = this.ctx.strokeStyle = 'rgb(' + this.color + ')';
+      this.ctx.fillStyle = this.ctx.strokeStyle = this.color;
       this.ctx.globalAlpha = (1 - (this.opacityStep * gen));
 
-      for (var ox = 0; ox < this.history[gen].length; ox++) {
+      for (let ox = 0; ox < this.history[gen].length; ox++) {
         x = (ox * this.scaleX);
         y = this.history[gen][ox];
         y = this.height - (y * this.scaleY);
