@@ -1,11 +1,13 @@
+
+import {File2Graph} from './File2Graph';
+// import {Chroma} from './Chroma';
+
 /* global define, document, alert, window, webkitAudioContext, webkitOfflineAudioContext, AudioContext, XMLHttpRequest, OfflineAudioContext */
-define( [ 'File2Graph', 'Chroma' ], function (
-	File2Graph, Chroma ) {
 
 	/*
-    Version 0.5
+    Version 0.6
 
-    This code is copyright (C) 2012 Lee Goddard.
+    This code is copyright (C) 2012 ff  Lee Goddard.
     All Rights Reserved.
 
     Available under the same terms as Perl5.
@@ -21,7 +23,7 @@ define( [ 'File2Graph', 'Chroma' ], function (
 
 */
 
-	var Spectra = function Spectra( options ) {
+export class Spectra {
 		File2Graph.call( this, options );
 		this.options.usepalette = options.usepalette || false;
 		this.cctx.globalAlpha = 255;
@@ -102,5 +104,3 @@ define( [ 'File2Graph', 'Chroma' ], function (
 		}
 	};
 
-	return Spectra;
-} );

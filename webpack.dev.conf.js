@@ -13,10 +13,10 @@ module.exports = {
       './eg/index',
       './src/index'
     ],
-    vendor: [
-      "@webcomponents/webcomponentsjs/custom-elements-es5-adapter",
-      "@webcomponents/webcomponentsjs/webcomponents-loader"
-    ]
+    // vendor: [
+    //   "@webcomponents/webcomponentsjs/custom-elements-es5-adapter",
+    //   "@webcomponents/webcomponentsjs/webcomponents-loader"
+    // ]
   },
   devtool: 'source-map',
   devServer: {
@@ -59,16 +59,15 @@ module.exports = {
         to: '.'
         // ignore: ['.*']
       },
-      {
-        from: path.join(
-          path.resolve(__dirname, './node_modules/@webcomponents/webcomponentsjs/'),
-          '*.js'
-        ),
-        to: './webcomponentjs',
-        flatten: true
-      }
+      // {
+      //   from: path.join(
+      //     path.resolve(__dirname, './node_modules/@webcomponents/webcomponentsjs/'),
+      //     '*.js'
+      //   ),
+      //   to: './webcomponentjs',
+      //   flatten: true
+      // }
     ]),
-    new webpack.IgnorePlugin(/vertx/),
     new webpack.HotModuleReplacementPlugin(),
   ]
 };

@@ -41,13 +41,13 @@ export class PcmVisual extends HTMLElement {
       throw new TypeError('uri parameter not supplied');
     }
 
+    this.renderTimer = null;
+
     const styles = window.getComputedStyle(this);
     this.color = styles.getPropertyValue('color') || this.color;
-    console.log(this.color);
     this.width = parseInt(styles.getPropertyValue('width'));
     this.height = parseInt(styles.getPropertyValue('height'));
 
-    this.renderTimer = null;
     this.shadow = this.attachShadow({ mode: 'open' });
 
     const style = document.createElement('style');
