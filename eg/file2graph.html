@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <title>HTML 5 Audio Experiment: pcm-graph</title>
+  <title>HTML 5 Audio Experiment: playable graph-on-load</title>
   <meta charset="utf-8">
   <script src="app.js" type="text/javascript"></script>
   <style>
@@ -10,7 +10,7 @@
       margin-bottom: 2em;
     }
 
-    pcm-graph:nth-of-type(2) {
+    .eg {
       background: blueviolet;
       color: white;
       height: 300px;
@@ -20,12 +20,21 @@
 </head>
 
 <body>
+  <h2>Default, unstyled</h2>
+  <pcm-graph uri='samples/ouds/oud1.wav'></pcm-graph>
+
+  <h2>Default, stylesheet</h2>
+  <pcm-graph uri='samples/ouds/oud1.wav' class='eg'>
+  </pcm-graph>
+
+  <h2>Default, inline style</h2>
   <pcm-graph uri='samples/ouds/oud1.wav' style='background:blueviolet;color:red; height:300px; width:600px;'>
   </pcm-graph>
 
-  <!-- <pcm-graph uri='samples/ouds/oud1.wav'></pcm-graph>
+  <h2>playable=false</h2>
+  <pcm-graph uri='samples/ouds/oud1.wav' playable=false></pcm-graph>
 
-  <pcm-graph uri='samples/ouds/oud1.wav'></pcm-graph> -->
+  <pcm-graph uri='samples/ouds/oud1.wav' overlaytype='bar' style='height:200px; width: 600px'></pcm-graph>
 
 </body>
 
