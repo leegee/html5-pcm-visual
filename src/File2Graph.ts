@@ -46,9 +46,9 @@ export class File2Graph extends HTMLElement {
   offlineNode: AudioBufferSourceNode;
   offlineAnalyser: AnalyserNode;
   offlineProcessor: ScriptProcessorNode;
+  strokestyle: string; /* foreground colour from css */
+  background: string; /* background colour  from css */
   graphwaveform = true; /* graph the wave or not */
-  strokestyle: string; /* foreground colour, may come from css if possible */
-  background: string; /* background colour, may come from css if possible */
   linewidth = 1; /* width of line used in graph */
   step = 4; /* Graph PCM in steps */
   // asimg = false; /* Replace canvas with image, prevents `pauseorjump` and `overlayclr` */
@@ -77,7 +77,7 @@ export class File2Graph extends HTMLElement {
     thisX: 0,
     lastX: 0,
     imgd: null, // ImageData
-    pxPerSec: 0,
+    pxPerSec: null,
     lastX2: 0,
     fg: {
       all: '',
@@ -95,7 +95,7 @@ export class File2Graph extends HTMLElement {
     x: null,
     y: null
   };
-  _actxStartTime: number;
+  actxStartTime: number;
 
   constructor() {
     super();
@@ -133,6 +133,16 @@ export class File2Graph extends HTMLElement {
 
     this.background = styles.getPropertyValue('background-color') || 'transparent';
     this.strokestyle = styles.getPropertyValue('color');
+
+    this.graphwaveform = (this.getAttribute('graphwaveform') && this.getAttribute('graphwaveform').match(/false/i)) ? false : true;
+    this.linewidth = parseInt(this.getAttribute('linewidth') || this.linewidth + '');
+    this.step = parseInt(this.getAttribute('step') || this.step + '');
+    this.pauseorjump = (this.getAttribute('pauseorjump') && this.getAttribute('pauseorjump').match(/jump/i) ? 'jump' : 'pause') || this.pauseorjump;
+    this.playable = (this.getAttribute('playable') && this.getAttribute('playable').match(/false/i)) ? false : true;
+    this.overlayclr = this.getAttribute('overlayclr') || this.overlayclr;
+    this.overlaytype = (this.getAttribute('overlaytype') && this.getAttribute('overlaytype').match(/bar/i) ? 'bar' : 'full') || this.overlaytype;
+    this.frequencyby = (this.getAttribute('frequencyby') && this.getAttribute('frequencyby').match(/max/i) ? 'max' : 'average') || this.frequencyby;
+    // asimg = false; /* Replace canvas with image, prevents `pauseorjump` and `overlayclr` */
 
     if (this.playable) {
       const node = document.createElement('div');
@@ -184,7 +194,7 @@ export class File2Graph extends HTMLElement {
   };
 
   onPlay() {
-    console.log('started at ', this.playbackTime, "(" + this._actxStartTime +
+    console.log('started at ', this.playbackTime, "(" + this.actxStartTime +
       ")");
   };
 
@@ -347,11 +357,13 @@ export class File2Graph extends HTMLElement {
     always moves forwards, and cannot be stopped or paused. now() is relative to the buffer.
     {@see this#_actxStartTime}
     */
-  now() {
-    return this.playbackTime + this.actx.currentTime - this._actxStartTime;
+  now(): number {
+    console.log('now', this.playbackTime, this.actx.currentTime, this.actxStartTime);
+    return this.playbackTime + this.actx.currentTime - this.actxStartTime;
   };
 
   play(startAt = 0) {
+    console.log('Enter play');
     if (!this.audioReady || this.playing) {
       return;
     }
@@ -359,9 +371,8 @@ export class File2Graph extends HTMLElement {
 
     this.setNode();
 
-    if (typeof startAt !== 'undefined') {
+    if (startAt > 0) {
       this.playbackTime = startAt;
-      // Rerender canvas:
       this.overlay.thisX = 1;
       this.replaceCanvasImg();
       this.overlayImg();
@@ -370,7 +381,6 @@ export class File2Graph extends HTMLElement {
     // Reset if done:
     if (this.playbackTime > this.node.buffer.duration) {
       this.playbackTime = 0;
-      this.replaceCanvasImg();
     }
 
     if (this.playbackTime === 0) {
@@ -393,8 +403,7 @@ export class File2Graph extends HTMLElement {
     this.fromX = this.playbackTime * this.overlay.pxPerSec;
 
     // '.pause' needs a place to start
-    this._actxStartTime = this.actx.currentTime;
-
+    this.actxStartTime = this.actx.currentTime;
     this.fireEvent('play');
   };
 
@@ -403,6 +412,8 @@ export class File2Graph extends HTMLElement {
     console.log('enter overlayImg');
     this.overlay.lastX = (typeof this.overlay.thisX === 'undefined') ?
       0 : this.overlay.thisX - 1;
+
+    console.log('this.overlay.thisX =', this.now(), '*', this.overlay.pxPerSec);
 
     this.overlay.thisX = this.now() * this.overlay.pxPerSec;
 
@@ -435,7 +446,7 @@ export class File2Graph extends HTMLElement {
 
         this.cctx.globalCompositeOperation = 'source-atop';
         this.cctx.fillStyle = this.overlay.fg.all;
-        console.log(this.overlay.thisX);
+        console.log('thisX', this.overlay.thisX);
         this.cctx.fillRect(
           this.overlay.thisX, 0, 1, this.height
         );
@@ -475,44 +486,33 @@ export class File2Graph extends HTMLElement {
     Used here to apply frequency analysis to colour the wave.
     Sets a few parameters for use during playback.
     */
-  offlineOverlayImg(e) {
-    if (typeof this.overlay.pxPerSec === 'undefined') {
+  _offlineOverlayImg(e) {
+    if (this.overlay.pxPerSec === null) {
       this.overlay.pxPerSec = this.width / this.buffer.duration;
-      //console.info( 'this.overlay.pxPerSec = ', this.overlay.pxPerSec)
-      //console.log( 'width = ', this.width, ', total px = ', this.overlay.pxPerSec * this.buffer.duration);
     }
 
     let fromX = Math.floor(e.playbackTime * this.overlay.pxPerSec);
-    const toX = Math.floor(fromX + (e.inputBuffer.duration * this.overlay.pxPerSec));
+    const toX = Math.ceil(fromX + (e.inputBuffer.duration * this.overlay.pxPerSec));
 
     if (toX > fromX) {
-      this.cctx.globalAlpha = 255;
-      this.cctx.globalCompositeOperation = 'source-atop';
-
       if (!this.offlineRenderStarted) {
         this.offlineRenderStarted = true;
         fromX = 0;
       }
 
-      let clrIndex = 0;
+      this.cctx.globalAlpha = 255;
+      this.cctx.globalCompositeOperation = 'source-atop';
+
       const bufferLength = this.offlineAnalyser.frequencyBinCount;
       const data = new Uint8Array(bufferLength);
       this.offlineAnalyser.getByteFrequencyData(data);
 
+      let clrIndex = 0;
       if (this.frequencyby === 'average') {
-        let values = 0;
-        for (let j = 0; j < data.length; j++) {
-          values += data[j];
-        }
+        const values = data.reduce((a, b) => a + b, 0);
         clrIndex = Math.floor(values / data.length);
       } else {
-        let max = 0;
-        for (let j = 0; j < bufferLength; j++) {
-          if (data[j] > max) {
-            max = data[j];
-          }
-        }
-        clrIndex = max;
+        clrIndex = Math.max(...data);
       }
       this.cctx.fillStyle = 'hsl(' + this.freqClrs[clrIndex] + ')';
       this.cctx.fillRect(
@@ -525,11 +525,10 @@ export class File2Graph extends HTMLElement {
   colourFrequencies() {
     console.log('Enter colourFrequencies');
     if (this.buffer === null) {
-      throw new Error('setNode not caled, no buffer!');
+      throw new Error('No buffer: setNode not called?');
     }
 
-    this.octx = new OfflineAudioContext(this.buffer.numberOfChannels,
-      this.buffer.length, this.buffer.sampleRate);
+    this.octx = new OfflineAudioContext(this.buffer.numberOfChannels, this.buffer.length, this.buffer.sampleRate);
 
     this.offlineNode = this.octx.createBufferSource();
 
@@ -537,22 +536,15 @@ export class File2Graph extends HTMLElement {
     this.offlineAnalyser.fftSize = this.fftsize;
     this.offlineAnalyser.smoothingTimeConstant = this.smoothingtimeconstant;
 
-    this.offlineProcessor = this.octx.createScriptProcessor(this.fftsize,
-      this.buffer.numberOfChannels, this.buffer.numberOfChannels);
+    this.offlineProcessor = this.octx.createScriptProcessor(this.fftsize, this.buffer.numberOfChannels, this.buffer.numberOfChannels);
+
     this.offlineProcessor.connect(this.octx.destination);
-
     this.offlineAnalyser.connect(this.offlineProcessor);
-
     this.offlineNode.connect(this.offlineAnalyser);
 
-    // When rendered, store the canvas for replays
-    this.octx.oncomplete = () => {
-      this.graphComplete();
-    }
+    this.octx.oncomplete = this.graphComplete.bind(this);
 
-    this.offlineProcessor.onaudioprocess = () => {
-      this.offlineOverlayImg;
-    }
+    this.offlineProcessor.onaudioprocess = this._offlineOverlayImg.bind(this);
 
     this.offlineNode.buffer = this.buffer;
     this.offlineNode.start();
@@ -613,10 +605,7 @@ export class File2Graph extends HTMLElement {
   };
 
   storeCanvasImg() {
-    this.canvasImgData = this.cctx.getImageData(
-      0, 0,
-      this.width, this.height
-    );
+    this.canvasImgData = this.cctx.getImageData(0, 0, this.width, this.height);
   };
 
   replaceCanvasImg() {
