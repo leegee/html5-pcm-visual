@@ -1,7 +1,7 @@
 {
   "name": "pcm-visual",
-  "description": "An aid to visualising PCM wave files",
-  "version": "1.0.0",
+  "description": "Visualise PCM wave files",
+  "version": "2.0.0",
   "engines": {
     "node": ">= 11.0.0"
   },
@@ -14,7 +14,7 @@
   },
   "author": {
     "name": "Lee Goddard",
-    "email": "js@leegoddard.net",
+    "email": "github@lee.goddards.space",
     "url": "https://github.com/leegee/html5-pcm-visual/"
   },
   "licenses": [

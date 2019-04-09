@@ -15,7 +15,7 @@ Set the element's dimensions and colour through CSS.
 
 To start playback/visualisation, call the element's `play` method. See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
 
-See the `eg` directory for examples.
+See the `eg` directory for examples. Run the examples with `npm run dev`, build with `npm run build`.
 
 ## `pcm-onload` attributes
 
