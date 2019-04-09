@@ -26,19 +26,7 @@
 
 */
 
-const getStyle = (el, styleProp) => {
-  const x = typeof el === 'string' ? document.getElementById(el) : el;
-  let y;
-
-  if (x.currentStyle) {
-    y = x.currentStyle[styleProp];
-  } else if (window.getComputedStyle) {
-    y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp);
-  }
-  return y;
-}
-
-export class File2Graph extends HTMLElement {
+export class PcmOnload extends HTMLElement {
   shadow: ShadowRoot;
   width: number;
   height: number;
@@ -614,4 +602,4 @@ export class File2Graph extends HTMLElement {
   };
 }
 
-customElements.define('pcm-graph', File2Graph);
+customElements.define('pcm-onload', PcmOnload);

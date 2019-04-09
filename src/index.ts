@@ -1,2 +1,2 @@
-export { PcmVisual } from './PcmVisual';
-export { File2Graph } from './File2Graph';
+export { PcmRealTime as PcmVisual } from './PcmRealtime';
+export { PcmOnload as File2Graph } from './PcmOnload';

@@ -5,7 +5,7 @@ const ATTR_NAMES = [
   'lineWidth', 'lineHeight', 'uri'
 ];
 
-export class PcmVisual extends HTMLElement {
+export class PcmRealTime extends HTMLElement {
   id: string;
   history: Array<Array<number>> = [];
   renderTimer: any;
@@ -144,4 +144,4 @@ export class PcmVisual extends HTMLElement {
   }
 }
 
-customElements.define('pcm-visual', PcmVisual);
+customElements.define('pcm-realtime', PcmRealTime);
