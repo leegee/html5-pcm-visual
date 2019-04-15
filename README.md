@@ -21,8 +21,6 @@ See the `eg` directory for examples. Run the examples with `npm run dev`, build 
 
 * `uri` (string) The only required parameter, the URI of the audio file to graph.
 
-* `graphwaveform` (boolean) Whether or not to graph the waveform
-
 * `linewidth` (number) Width of the graph's line
 
 * `step` (number) Graph PCM in steps
@@ -51,3 +49,7 @@ See the `eg` directory for examples. Run the examples with `npm run dev`, build 
 * `lineWidth`
 
 * `lineHeight`
+
+## TODO
+
+https://www.hellorust.com/demos/canvas/index.html

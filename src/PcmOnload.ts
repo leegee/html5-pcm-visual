@@ -36,7 +36,6 @@ export class PcmOnload extends HTMLElement {
   offlineProcessor: ScriptProcessorNode;
   strokestyle: string; /* foreground colour from css */
   background: string; /* background colour  from css */
-  graphwaveform = true; /* graph the wave or not */
   linewidth = 1; /* width of line used in graph */
   step = 4; /* Graph PCM in steps */
   // asimg = false; /* Replace canvas with image, prevents `pauseorjump` and `overlayclr` */
@@ -122,7 +121,6 @@ export class PcmOnload extends HTMLElement {
     this.background = styles.getPropertyValue('background-color') || 'transparent';
     this.strokestyle = styles.getPropertyValue('color');
 
-    this.graphwaveform = (this.getAttribute('graphwaveform') && this.getAttribute('graphwaveform').match(/false/i)) ? false : true;
     this.linewidth = parseInt(this.getAttribute('linewidth') || this.linewidth + '');
     this.step = parseInt(this.getAttribute('step') || this.step + '');
     this.pauseorjump = (this.getAttribute('pauseorjump') && this.getAttribute('pauseorjump').match(/jump/i) ? 'jump' : 'pause') || this.pauseorjump;
@@ -160,7 +158,6 @@ export class PcmOnload extends HTMLElement {
     this.cctx = this.canvas.getContext('2d');
 
     this.setClrs();
-    this.initGraphics();
     this.load();
   }
 
@@ -207,28 +204,6 @@ export class PcmOnload extends HTMLElement {
     }
   };
 
-  initGraphics() {
-    // const gfxEl = ['canvas'];
-
-    // // if (this.asimg) {
-    // //   gfxEl.push('img');
-    // // }
-
-    // gfxEl.forEach((el) => {
-    //   this[el] = document.createElement(el);
-    //   this[el].setAttribute('class', this.getAttribute('class'));
-    //   this[el].style.backgroundColor = this.background;
-
-    //   ['width', 'height'].forEach((i) => {
-    //     this[i] = parseInt(this[i]);
-    //     const unit = (this[i] === this[i]) ? 'px' : '';
-    //     this[el].style[i] = (this[i] + unit);
-    //   });
-    // });
-
-    // this.parentNode.appendChild(this.canvas);
-  };
-
   load() {
     const request = new XMLHttpRequest();
     request.open("GET", this.getAttribute('uri'), true);
@@ -260,38 +235,36 @@ export class PcmOnload extends HTMLElement {
     */
   render() {
     const channelData = [];
-    if (this.graphwaveform) {
-      this.cctx.beginPath();
-      this.cctx.strokeStyle = this.strokestyle;
-      this.cctx.lineWidth = this.linewidth;
+    this.cctx.beginPath();
+    this.cctx.strokeStyle = this.strokestyle;
+    this.cctx.lineWidth = this.linewidth;
 
-      this.cctx.moveTo(0, this.height / 2);
+    this.cctx.moveTo(0, this.height / 2);
 
-      for (let channel = 0; channel < this.buffer.numberOfChannels; channel++) {
-        channelData[channel] = this.buffer.getChannelData(channel);
+    for (let channel = 0; channel < this.buffer.numberOfChannels; channel++) {
+      channelData[channel] = this.buffer.getChannelData(channel);
+    }
+
+    const xFactor = this.width / channelData[0].length;
+
+    for (let i = 0; i < channelData[0].length; i += this.step) {
+      let v = 0;
+      for (let c = 0; c < this.buffer.numberOfChannels; c++) {
+        v += channelData[c][i];
       }
 
-      const xFactor = this.width / channelData[0].length;
+      const x = i * xFactor;
+      let y = (v / this.buffer.numberOfChannels);
+      // console.assert( y < 1 );
+      y = (this.height * y / 2) + (this.height / 2);
 
-      for (let i = 0; i < channelData[0].length; i += this.step) {
-        let v = 0;
-        for (let c = 0; c < this.buffer.numberOfChannels; c++) {
-          v += channelData[c][i];
-        }
+      this.cctx.lineTo(
+        Math.floor(x),
+        Math.floor(y)
+      );
+    }
 
-        const x = i * xFactor;
-        let y = (v / this.buffer.numberOfChannels);
-        // console.assert( y < 1 );
-        y = (this.height * y / 2) + (this.height / 2);
-
-        this.cctx.lineTo(
-          Math.floor(x),
-          Math.floor(y)
-        );
-      }
-
-      this.cctx.stroke();
-    };
+    this.cctx.stroke();
 
     this.fireEvent('rendered');
   };
