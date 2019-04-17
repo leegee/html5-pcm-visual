@@ -84,9 +84,7 @@ export class PcmOnload extends HTMLElement {
   };
   actxStartTime: number;
 
-  constructor() {
-    super();
-
+  connectedCallback() {
     this.step = Math.floor(this.step);
 
     if (typeof AudioContext !== 'function') {
@@ -101,9 +99,7 @@ export class PcmOnload extends HTMLElement {
     if (!this.frequencyby.match(/max/i)) {
       this.pauseorjump = 'average';
     }
-  }
 
-  connectedCallback() {
     this.shadow = this.attachShadow({ mode: 'open' });
     const styles = window.getComputedStyle(this);
 
