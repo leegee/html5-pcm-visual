@@ -24,10 +24,6 @@
     }
   ],
   "devDependencies": {
-    "@skatejs/bore": "^5.0.2",
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "chai": "^4.2.0",
     "clean-webpack-plugin": "0.1.17",
     "connect": "^3.6.6",
     "copy-webpack-plugin": "4.1.0",
@@ -43,7 +39,6 @@
   },
   "dependencies": {
     "typescript": "^3.4.1",
-    "@webcomponents/webcomponentsjs": "2.2.7",
-    "web-animations-js": "^2.3.1"
+    "@webcomponents/webcomponentsjs": "2.2.7"
   }
 }
