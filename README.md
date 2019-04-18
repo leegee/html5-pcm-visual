@@ -1,8 +1,10 @@
 # pcm-visual
 
-An aid to visualising PCM wave files
+An aid to visualising PCM wave files in Chrome.
 
 Provides `<pcm-realtime>` and `<pcm-onload>`.
+
+This was experimental - indeed, the API has been depracted. This code may be updated.
 
 ## Installation
 

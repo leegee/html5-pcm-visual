@@ -444,8 +444,10 @@ export class PcmOnload extends HTMLElement {
     Sets a few parameters for use during playback.
     */
   _offlineOverlayImg(e) {
-    if (this.overlay.pxPerSec === null) {
+    if (this.overlay.pxPerSec === null) { // first call
       this.overlay.pxPerSec = this.width / this.buffer.duration;
+      this.cctx.globalAlpha = 255;
+      this.cctx.globalCompositeOperation = 'source-atop';
     }
 
     let fromX = Math.floor(e.playbackTime * this.overlay.pxPerSec);
@@ -457,11 +459,7 @@ export class PcmOnload extends HTMLElement {
         fromX = 0;
       }
 
-      this.cctx.globalAlpha = 255;
-      this.cctx.globalCompositeOperation = 'source-atop';
-
-      const bufferLength = this.offlineAnalyser.frequencyBinCount;
-      const data = new Uint8Array(bufferLength);
+      const data = new Uint8Array(this.offlineAnalyser.frequencyBinCount);
       this.offlineAnalyser.getByteFrequencyData(data);
 
       let clrIndex = 0;
