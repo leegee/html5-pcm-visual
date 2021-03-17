@@ -424,6 +424,7 @@ export class PcmOnload extends HTMLElement {
                 */
 
         // this.cctx.globalAlpha = 12;
+        console.info('---------------')
         this.cctx.globalCompositeOperation = 'source-atop';
         this.cctx.fillStyle = this.overlay.fg.all;
         this.cctx.fillRect(

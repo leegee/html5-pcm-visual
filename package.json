@@ -8,7 +8,7 @@
   "scripts": {
     "test": "mocha --require ts-node/register src/**/*.spec.ts",
     "dev": "webpack-dev-server --config ./webpack.dev.conf.js",
-    "start": "webpack-dev-server --mode development --open --config ./webpack.dev.conf.js",
+    "start": "webpack-dev-server --config ./webpack.dev.conf.js --open",
     "build": "webpack --config ./webpack.prod.conf.js",
     "test-dist": "node -e \"require('connect')().use(require('serve-static')(__dirname+'/dist')).listen(9090, () => { console.log('Server running on http://localhost:9090 ...'); });\""
   },

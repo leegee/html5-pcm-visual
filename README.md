@@ -1,10 +1,8 @@
 # pcm-visual
 
-An aid to visualising PCM wave files in Chrome.
+An aid to visualising PCM wave files in Chromium browsers, and perhaps others.
 
-Provides `<pcm-realtime>` and `<pcm-onload>`.
-
-This was experimental - indeed, the API has been depracted. This code may be updated.
+Provides web components `<pcm-realtime>` and `<pcm-onload>`.
 
 ## Installation
 
@@ -15,9 +13,9 @@ This was experimental - indeed, the API has been depracted. This code may be upd
 
 Set the element's dimensions and colour through CSS.
 
-To start playback/visualisation, call the element's `play` method. See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
+To start playback/visualisation, call the element's `play` method, because  https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#webaudio
 
-See the `eg` directory for examples. Run the examples with `npm run dev`, build with `npm run build`.
+See the `eg` directory for examples. Run the examples with `npm start`, build with `npm run build`.
 
 ## `pcm-onload` attributes
 
@@ -52,6 +50,6 @@ See the `eg` directory for examples. Run the examples with `npm run dev`, build 
 
 * `lineHeight`
 
-## TODO
+## Web Assembly
 
-https://www.hellorust.com/demos/canvas/index.html
+A Rust-coded WASM can found somewhere in my GitHub repos.
